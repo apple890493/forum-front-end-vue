@@ -1300,7 +1300,7 @@ const dummyData = {
 
 const dummyUser = {
   currentUser: {
-    id: 2,
+    id: 1,
     name: "root",
     email: "root@example.com",
     image: null,
