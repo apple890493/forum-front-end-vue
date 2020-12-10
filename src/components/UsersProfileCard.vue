@@ -2,7 +2,7 @@
   <div class="card mb-3">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img :src="user.image" width="300px" height="300px" />
+        <img :src="user.image | emptyImage" width="300px" height="300px" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -24,8 +24,10 @@
           </ul>
           <p>
             <template v-if="currentUser.id === user.id">
-              <a href="/users/1/edit"
-                ><button type="submit" class="btn btn-primary">edit</button></a
+              <router-link :to="{ name: 'user-edit', params: { id: user.id } }"
+                ><button type="submit" class="btn btn-primary">
+                  edit
+                </button></router-link
               >
             </template>
             <template v-else>
@@ -54,7 +56,10 @@
 </template>
 
 <script>
+import { emptyImageFilter } from "../utils/mixins";
+
 export default {
+  mixins: [emptyImageFilter],
   props: {
     user: {
       type: Object,
