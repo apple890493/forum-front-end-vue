@@ -90,19 +90,22 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log("1");
+        console.log("response", response);
         //取得API資料
         const { data } = response;
-        console.log("2");
+        // console.log("2");
         // 將 token 存放在 localStorage 內
         localStorage.setItem("token", data.token);
+        //將資料傳送到vuex中,data.user會覆蓋舊的資料
+        this.$store.commit("setCurrentUser", data.user);
+
         // 如果資料狀態不是success
         if (data.status !== "success") {
           throw new Error(data.message);
         }
         //成功導向
         this.$router.push("/restaurants");
-        console.log("3");
+        // console.log("3");
       } catch (err) {
         this.password = "";
         Toast.fire({

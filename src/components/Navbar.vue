@@ -53,46 +53,51 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 // eslint - disable;
 //seed data
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "root",
-    email: "root@example.com",
-    image: "https://i.pravatar.cc/300",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
+// const dummyUser = {
+//   currentUser: {
+//     id: 1,
+//     name: "root",
+//     email: "root@example.com",
+//     image: "https://i.pravatar.cc/300",
+//     isAdmin: true,
+//   },
+//   isAuthenticated: true,
+// };
 
 export default {
-  //類似預設值
-  data() {
-    return {
-      currentUser: {
-        id: -1,
-        nam: "",
-        email: "",
-        image: "",
-        isAdmin: false,
-      },
-      isAuthenticated: false,
-    };
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
-  methods: {
-    //會向後端API拉取資料
-    fetchUser() {
-      this.currentUser = {
-        ...this.currentUser,
-        ...dummyUser.currentUser,
-        //兩者有的資料,後面資料會蓋過預設值
-      };
-      this.isAuthenticated = dummyUser.isAuthenticated;
-    },
-  },
-  created() {
-    this.fetchUser();
-  },
+  // //類似預設值
+  // data() {
+  //   return {
+  //     currentUser: {
+  //       id: -1,
+  //       nam: "",
+  //       email: "",
+  //       image: "",
+  //       isAdmin: false,
+  //     },
+  //     isAuthenticated: false,
+  //   };
+  // },
+  // methods: {
+  //   //會向後端API拉取資料
+  //   fetchUser() {
+  //     this.currentUser = {
+  //       ...this.currentUser,
+  //       ...dummyUser.currentUser,
+  //       //兩者有的資料,後面資料會蓋過預設值
+  //     };
+  //     this.isAuthenticated = dummyUser.isAuthenticated;
+  //   },
+  // },
+  // created() {
+  //   this.fetchUser();
+  // },
 };
 </script>

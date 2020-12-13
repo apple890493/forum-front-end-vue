@@ -4,7 +4,7 @@ import Signin from '../views/SignIn.vue'
 // import Signup from '../views/Signup.vue'
 import Restaurants from '../views/Restaurants.vue'
 import NotFound from '../views/NotFound.vue'
-
+import store from './../store'
 
 Vue.use(VueRouter)
 
@@ -109,6 +109,13 @@ const routes = [
 const router = new VueRouter({
   linkExactActiveClass: 'active', //重新更改屬性內容
   routes
+})
+
+//beforeEach & beforeRouterUpdate一樣可以取到from to的值
+router.beforeEach((to, from, next) => {
+  // 使用 dispatch 呼叫 Vuex 內的 actions
+  store.dispatch('fetchCurrentUser')
+  next()
 })
 
 export default router
