@@ -25,7 +25,6 @@ export default {
       })
     }
   },
-
   restaurants: {
     create({ formData }) {
       return apiHelper.post('/admin/restaurants', formData, { headers: { Authorization: `Bearer ${getToken()}` } })
@@ -51,4 +50,16 @@ export default {
       })
     }
   },
+  users: {
+    get() {
+      return apiHelper.get('/admin/users', {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      })
+    },
+    update({ userId, isAdmin }) {
+      return apiHelper.put(`/admin/users/${userId}`, { isAdmin }, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      })
+    }
+  }
 }
