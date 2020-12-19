@@ -2,7 +2,6 @@
   <div class="container py-5">
     <!-- 1. 使用先前寫好的 AdminNav -->
     <AdminNav />
-
     <form class="my-4">
       <div class="form-row">
         <div class="col-auto">
@@ -25,7 +24,9 @@
         </div>
       </div>
     </form>
-    <table class="table">
+
+    <Spinner v-if="isLoading" />
+    <table v-else class="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col" width="60">#</th>
@@ -92,6 +93,7 @@
 <script>
 // import { v4 as uuidv4 } from "uuid";
 import AdminNav from "./../components/AdminNav";
+import Spinner from "./../components/Spinner";
 import adminAPI from "./../apis/admin";
 import { Toast } from "./../utils/helpers";
 //  2. 定義暫時使用的資料
@@ -99,6 +101,7 @@ import { Toast } from "./../utils/helpers";
 export default {
   components: {
     AdminNav,
+    Spinner,
   },
   // 3. 定義 Vue 中使用的 data 資料
   data() {
@@ -106,6 +109,7 @@ export default {
       categories: [],
       newCategoryName: "",
       isProcessing: false,
+      isLoading: true,
     };
   },
   // 5. 調用 `fetchCategories` 方法
@@ -128,6 +132,7 @@ export default {
           isEditing: false, //預設值
           nameCached: "", //編輯前的內容
         }));
+        this.isLoading = false;
       } catch (err) {
         this.isProcessing = false;
         Toast.fire({

@@ -15,7 +15,9 @@ export default new Vuex.Store({
       isAdmin: false,
     },
     isAuthenticated: false,
+    token: ''
   },
+  //使用commit才能呼叫到function
   mutations: {
     setCurrentUser(state, currentUser) {
       state.currentUser = {
@@ -25,6 +27,13 @@ export default new Vuex.Store({
       }
       //若是登入成功就會是登入狀態true
       state.isAuthenticated = true
+      state.token = localStorage.getItem('token')
+    },
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      state.token = ''
+      localStorage.removeItem('token')
     }
   },
   actions: {
@@ -43,9 +52,13 @@ export default new Vuex.Store({
           isAdmin
         })
 
+        return true //回傳boolean
       } catch (err) {
         console.log('err', err)
         console.err('can not fetch user information')
+        // 驗證失敗的話一併觸發登出的行為，以清除 state 中的 token
+        commit('revokeAuthentication')
+        return false //回傳boolean
       }
     }
   },

@@ -4,9 +4,24 @@ import Swal from 'sweetalert2'
 
 const baseURL = 'https://forum-express-api.herokuapp.com/api'
 
-export const apiHelper = axios.create({
+const axiosInstance = axios.create({
   baseURL: baseURL
 })
+
+axiosInstance.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
+
+
+  // 如果 token 存在的話，則自動帶入到 headers 當中
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`
+  }
+  return config
+},
+  err => Promise.reject(err)
+)
+
+export const apiHelper = axiosInstance
 
 export const Toast = Swal.mixin({
   toast: true,
